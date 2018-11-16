@@ -37,7 +37,7 @@ def getcon(equation):
 			config.append([sign, coeff, power])
 		else:
 			const = int(signs[each] + equation[each])
-	print config
+
 	return [config, const]
 
 
@@ -76,11 +76,10 @@ def plot(graph, equation, start = -15, end = 15):
 				xhere = coeff*(x**power)*sign
 				y += xhere
 		pairs.append([x, y])
-	print pairs
+	#print pairs
 	ytent = (r-1)/2
 	xtent = (c-1)/2
 	
-	print xtent, ytent
 
 
 	for each in pairs:
@@ -90,11 +89,14 @@ def plot(graph, equation, start = -15, end = 15):
 			except Exception:
 				pass
 
+	print 'Ordered pairs: \n'
+	for each in pairs:
+		print each,
 	graph.print_board()
 
 
-h = True
-while h:
+
+while True:
 
 	graph = board(r, c, ' ')
 	for each in range(c):
@@ -106,5 +108,6 @@ while h:
 
 	equation = raw_input('Enter the equation in x: \ny = ')
 
-	plot(graph, equation)
-	h = False
+	start = int(raw_input('Start at: '))
+	end = int(raw_input('End at: '))
+	plot(graph, equation, start, end)
