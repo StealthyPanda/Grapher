@@ -12,4 +12,6 @@ class mn_board(object):
 			print ' '.join(each)
 	#puts z at row x and column y
 	def put_at(self, x, y, z):
+		x = int(x)
+		y = int(y)
 		self.el_board[x-1][y-1] = z

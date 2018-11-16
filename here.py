@@ -1,24 +1,13 @@
 from board import mn_board as board
 
 #getting input
-"""r = int(raw_input('Enter rows: '))
-c = int(raw_input('Enter cols: '))"""
-r = 51
-c = 51
+
+r = 61
+c = 61
 origin = [r/2+1, c/2+1]
-
-
-#init stuff
-graph = board(r, c, ' ')
-for each in range(c):
-	graph.put_at(r/2 + 1, each, '-')
-for each in range(r):
-	graph.put_at(each, c/2 + 1, '|')
-graph.put_at(r/2 + 1, c/2 + 1, '+')
 
 #getting the equation
 
-equation = raw_input('Enter the equation in x: \n')
 
 def getcon(equation):
 	config = []#main thing
@@ -48,14 +37,14 @@ def getcon(equation):
 			config.append([sign, coeff, power])
 		else:
 			const = int(signs[each] + equation[each])
-
+	print config
 	return [config, const]
 
 
-print getcon(equation)
+#print getcon(equation)
 
 
-def plot(equation, start = -10, end = 10):
+def plot(graph, equation, start = -15, end = 15):
 
 	equation = getcon(equation)
 	config = equation[0]
@@ -65,40 +54,57 @@ def plot(equation, start = -10, end = 10):
 	pairs = []
 	#goin thru range
 	for x in range(start, end+1):
-		y = const
+		y = 'no'
+		xhere = 0
 		#goin thru each term
 		for each in config:
 			sign = 1
 			coeff=0
 			power=0
-			if sign == '-': sign = -1
+			if each[0] == '-': sign = -1
 			if each[1]:
-				coeff = int(each[1])
+				coeff = float(each[1])
 			else:
 				coeff = 1
 
 			if each[2]:
-				power = int(each[2])
+				power = float(each[2])
 			else:
 				power = 1
-
-			xhere = coeff*(x**power)*sign
-			y += xhere
+			if not(x < 0 and isinstance(power, float)):
+				y = const
+				xhere = coeff*(x**power)*sign
+				y += xhere
 		pairs.append([x, y])
+	print pairs
+	ytent = (r-1)/2
+	xtent = (c-1)/2
+	
+	print xtent, ytent
+
 
 	for each in pairs:
-		graph.put_at(origin[1]-each[0], origin[0]+each[1], 'X')
+		if -1*xtent <= each[0] and each[0] <= xtent and -1*ytent <= each[1] and each[1] <= ytent:
+			try:
+				graph.put_at(origin[0] - each[1], origin[1] + each[0], 'X')
+			except Exception:
+				pass
 
 	graph.print_board()
 
 
-plot(equation)
+h = True
+while h:
+
+	graph = board(r, c, ' ')
+	for each in range(c):
+		graph.put_at(r/2 + 1, each, '-')
+	for each in range(r):
+		graph.put_at(each, c/2 + 1, '|')
+	graph.put_at(r/2 + 1, c/2 + 1, '+')
 
 
+	equation = raw_input('Enter the equation in x: \ny = ')
 
-
-
-
-#printing the graph
-#graph.print_board()
-
+	plot(graph, equation)
+	h = False
