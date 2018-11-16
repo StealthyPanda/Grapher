@@ -92,6 +92,7 @@ def plot(graph, equation, start = -15, end = 15):
 	print 'Ordered pairs: \n'
 	for each in pairs:
 		print each,
+	print '\n'
 	graph.print_board()
 
 
@@ -111,3 +112,5 @@ while True:
 	start = int(raw_input('Start at: '))
 	end = int(raw_input('End at: '))
 	plot(graph, equation, start, end)
+
+	wait = raw_input()
